@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EIN Application Intake",
+  "type": "object",
+  "required": [
+    "legal_name", "responsible_party_name", "responsible_party_tin",
+    "mailing_address", "county_state", "entity_type", "reason_for_applying",
+    "date_business_started", "closing_month", "expected_employees_12mo",
+    "principal_activity", "principal_product_or_service", "prior_ein_ever_issued",
+    "explicit_submission_consent"
+  ],
+  "properties": {
+    "legal_name": {"type": "string", "description": "SS-4 line 1"},
+    "trade_name": {"type": "string", "description": "SS-4 line 2, if different from legal name"},
+    "responsible_party_name": {"type": "string", "description": "SS-4 line 7a; must be a natural person"},
+    "responsible_party_tin": {
+      "type": "string",
+      "description": "SSN, ITIN, or EIN of responsible party (SS-4 line 7b). Collect live in-session; never persist in plaintext.",
+      "pattern": "^[0-9-]{9,11}$"
+    },
+    "mailing_address": {
+      "type": "object",
+      "properties": {
+        "line1": {"type": "string"},
+        "city": {"type": "string"},
+        "state": {"type": "string"},
+        "zip": {"type": "string"},
+        "country": {"type": "string", "default": "US"}
+      },
+      "required": ["line1", "city", "state", "zip"]
+    },
+    "physical_address_if_different": {"type": "object"},
+    "county_state": {"type": "string", "description": "County and state of principal business location, SS-4 line 6"},
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "sole_proprietor", "partnership", "corporation", "personal_service_corporation",
+        "llc", "trust", "estate", "church_or_church_controlled_org",
+        "other_nonprofit", "state_local_government", "federal_government",
+        "farmers_cooperative", "indian_tribal_govt", "plan_administrator",
+        "military_national_guard", "remic", "other"
+      ]
+    },
+    "llc_details": {
+      "type": "object",
+      "properties": {
+        "member_count": {"type": "integer", "minimum": 1},
+        "organized_in_us": {"type": "boolean"}
+      }
+    },
+    "state_formation_confirmed": {
+      "type": "boolean",
+      "description": "Required true for llc/corporation before proceeding, per IRS guidance"
+    },
+    "reason_for_applying": {
+      "type": "string",
+      "enum": [
+        "started_new_business", "hired_employees", "banking_purpose",
+        "changed_type_of_organization", "purchased_going_business",
+        "created_a_trust", "created_a_pension_plan",
+        "compliance_with_irs_withholding_regulations", "other"
+      ]
+    },
+    "date_business_started": {"type": "string", "format": "date"},
+    "closing_month": {"type": "string", "description": "Closing month of accounting year, default December"},
+    "expected_employees_12mo": {"type": "integer", "minimum": 0},
+    "principal_activity": {"type": "string"},
+    "principal_product_or_service": {"type": "string"},
+    "prior_ein_ever_issued": {
+      "type": "object",
+      "properties": {
+        "issued_before": {"type": "boolean"},
+        "prior_ein": {"type": "string"}
+      },
+      "required": ["issued_before"]
+    },
+    "third_party_designee": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "phone": {"type": "string"},
+        "authorized_by_responsible_party": {"type": "boolean"}
+      }
+    },
+    "explicit_submission_consent": {
+      "type": "boolean",
+      "description": "Must be true and freshly obtained after final review screen, distinct from initial request consent"
+    },
+    "eligibility_checks": {
+      "type": "object",
+      "properties": {
+        "within_availability_window": {"type": "boolean"},
+        "no_ein_issued_today_for_this_responsible_party": {"type": "boolean"}
+      },
+      "required": ["within_availability_window", "no_ein_issued_today_for_this_responsible_party"]
+    }
+  }
+}

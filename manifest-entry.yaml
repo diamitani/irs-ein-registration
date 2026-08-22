@@ -1,0 +1,47 @@
+id: irs-ein-registration
+name: IRS EIN Registration Agent
+version: 0.1.0
+status: draft
+category: operations
+owner: rostr-pal-skill-builder
+trigger: "User asks to obtain/register/apply for an IRS EIN for an individual, sole proprietorship, LLC, corporation, partnership, trust, or estate."
+entrypoint: SKILL.md
+inputs:
+  - responsible_party_details
+  - entity_details
+  - explicit_submission_consent
+outputs:
+  - ein_confirmation_number
+  - ein_certification_letter
+  - submission_record
+allowed_tools:
+  - browser.navigate
+  - browser.fill_form
+  - browser.click
+  - browser.screenshot
+  - browser.download_file
+  - file.write
+  - google_drive.upload_file
+  - supabase.storage_upload
+  - supabase.db_insert
+  - notion_mcp.create_page
+denied_tools:
+  - email.send_to_third_party
+  - sms.send
+  - payment.charge
+requires_approval_for:
+  - final_submission_of_ein_application
+  - transmission_of_ssn_or_itin_to_any_non_irs_destination
+  - upload_of_certification_letter_to_any_shared_or_public_location
+memory_namespace: "project/{project_id}"
+dependencies:
+  - browser-automation-tool (Playwright MCP, Cloudflare Browser Rendering, or Airtop)
+  - one of: google_drive | supabase (storage bucket) | notion_mcp (for outputs/documents)
+data_boundaries:
+  pii_fields: [ssn, itin, ein, legal_name, mailing_address]
+  pii_storage_policy: "session-only; redact SSN/ITIN before persisting submission_record"
+constraints:
+  availability_window_et: "Mon-Fri 06:00-25:00, Sat 06:00-21:00, Sun 18:00-24:00"
+  rate_limit: "1 EIN per responsible party per calendar day"
+supersedes: null
+related_skills: []

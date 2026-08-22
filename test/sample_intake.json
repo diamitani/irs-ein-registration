@@ -1,0 +1,33 @@
+{
+  "legal_name": "Acme Widgets LLC",
+  "trade_name": null,
+  "responsible_party_name": "John Smith",
+  "responsible_party_tin": "123-45-6789",
+  "mailing_address": {
+    "line1": "123 Main Street",
+    "city": "Wilmington",
+    "state": "DE",
+    "zip": "19801"
+  },
+  "county_state": "New Castle, DE",
+  "entity_type": "llc",
+  "llc_details": {
+    "member_count": 1,
+    "organized_in_us": true
+  },
+  "state_formation_confirmed": true,
+  "reason_for_applying": "started_new_business",
+  "date_business_started": "2026-08-01",
+  "closing_month": "December",
+  "expected_employees_12mo": 0,
+  "principal_activity": "software development",
+  "principal_product_or_service": "web applications",
+  "prior_ein_ever_issued": {
+    "issued_before": false
+  },
+  "explicit_submission_consent": true,
+  "eligibility_checks": {
+    "within_availability_window": true,
+    "no_ein_issued_today_for_this_responsible_party": true
+  }
+}
