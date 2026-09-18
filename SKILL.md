@@ -1,31 +1,7 @@
 ---
 name: irs-ein-registration
-description: Get an EIN via IRS.gov browser automation. Asks questions one at a time. Checks IRS hours. Encrypts SSN locally.
-version: 0.2.0
-status: draft
-owner: rostr-pal-skill-builder
-category: operations
-trigger: User asks to get/register/apply for an EIN.
-inputs:
-  - name: all_ss4_fields
-    required: true
-    collection: one_at_a_time
-outputs:
-  - name: ein_number
-    format: string
-  - name: confirmation_pdf
-    format: file
-memory_namespace: project/{project_id}
-allowed_tools:
-  - Bash (for Playwright/browser automation)
-  - Read
-  - Write
-  - WebFetch
-denied_tools:
-  - email.send_to_third_party
-requires_approval_for:
-  - final_submission_of_ein_application
-  - ssn_collection
+description: >
+  Get an EIN via IRS.gov browser automation. Asks questions one at a time. Checks IRS hours. Encrypts SSN locally. Use this skill when working with irs ein registration tasks or workflows.
 ---
 
 # IRS EIN Registration
